@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# TanStack React Query v5 Learning Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome! This repository is an **interactive playground and learning hub** designed to teach developers how to transition from global client-side state management (like Redux or Context API) to modern **Server State Cache** using **TanStack React Query v5**.
 
-Currently, two official plugins are available:
+It features a fully functioning Task Management application with an inline Query Cache Monitor, a configurable network conditions simulator, and a hand-crafted developer guide.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Quick Start (How to Run)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+To run the application locally:
 
-## Expanding the ESLint configuration
+```bash
+# 1. Clone the repository
+git clone https://github.com/Eli-Keli/react-query-learning-hub.git
+cd react-query-learning-hub
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 2. Install dependencies
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Start the Vite development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open **[http://localhost:5173/](http://localhost:5173/)** in your browser. 
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Main Features
+
+1. **Interactive Task Manager**: Add, delete, and toggle tasks paginated, filtered, and searched in real-time.
+2. **Network Simulator**: Sliders to adjust simulated network latency (0 to 5 seconds) and failure rates (0% to 100%) to see how React Query handles loading states, retries, and rollbacks.
+3. **Query Cache Monitor**: A custom-built, real-time dashboard displaying active query keys, payload sizes, timestamps, and cache statuses (`fresh`, `stale`, `fetching`, `inactive`).
+4. **Interactive Developer Guide**: A readable documentation portal compiled inside the app.
+5. **Theme Selector**: Full dark-mode and light-mode theme switcher.
+
+---
+
+## 📂 Code Tour (Where to Start)
+
+If you are exploring the codebase to learn TanStack React Query, check out these files in order:
+
+1. **`src/services/api.ts`**: The mocked database layer stored in `localStorage` that introduces delay and errors dynamically based on simulator sliders.
+2. **`src/hooks/useTasks.ts`**: Contains our queries wrapping the `useQuery` hook. Focus on:
+   - Query Key Factory structures.
+   - Configuring custom `staleTime` and `gcTime` properties.
+   - Implementing pagination transitions with `placeholderData: keepPreviousData`.
+3. **`src/hooks/useMutations.ts`**: Custom mutations using `useMutation`. Focus on:
+   - Simple cache invalidation (`queryClient.invalidateQueries`).
+   - The **Optimistic Update** workflow on status toggles (canceling queries, snapshotting cache, updating instantly, rolling back on errors, and syncing on settled).
+4. **`src/components/QueryMonitor.tsx`**: How we subscribe directly to `queryClient.getQueryCache()` to visualize the cache lifecycle without external DevTools.
+5. **`src/App.tsx`**: Setting up `QueryClient`, wrapping the application tree in `QueryClientProvider`, and mounting the official floating DevTools.
