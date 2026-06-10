@@ -30,6 +30,92 @@
   --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Light Theme Variables */
+[data-theme="light"] {
+  --bg-primary: 228, 20%, 94%;       /* Clean light background */
+  --bg-secondary: 228, 20%, 100%;    /* Pure white cards */
+  --bg-tertiary: 228, 14%, 90%;     /* Slightly darker white/gray for list items */
+  
+  --primary: 354, 100%, 55%;        /* Darker, high contrast coral */
+  --primary-glow: 354, 100%, 55%, 0.12;
+  --secondary: 195, 100%, 42%;      /* Fetching Blue/Cyan for light mode */
+  --secondary-glow: 195, 100%, 50%, 0.12;
+  
+  --text-main: 228, 12%, 18%;       /* Very dark slate */
+  --text-muted: 228, 10%, 45%;      /* Muted gray for description text */
+  --text-dark: 228, 10%, 92%;       /* Text on dark backgrounds */
+  
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Light Mode Overrides for Hardcoded Dark Colors */
+[data-theme="light"] body {
+  background: radial-gradient(circle at 50% 0%, hsl(228, 20%, 98%), hsl(var(--bg-primary)));
+}
+
+[data-theme="light"] .dashboard-header h1 {
+  background: linear-gradient(135deg, #111 40%, hsl(var(--primary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .header-title h2,
+[data-theme="light"] .query-count-badge,
+[data-theme="light"] .query-key,
+[data-theme="light"] .add-task-form h4,
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea,
+[data-theme="light"] .form-group select,
+[data-theme="light"] .task-title,
+[data-theme="light"] .legend-item strong,
+[data-theme="light"] .doc-h1,
+[data-theme="light"] .doc-h2 {
+  color: hsl(var(--text-main));
+}
+
+[data-theme="light"] .search-input-wrapper input,
+[data-theme="light"] .filter-select-wrapper select {
+  color: hsl(var(--text-main));
+  background: hsl(var(--bg-secondary));
+}
+
+[data-theme="light"] .add-task-form {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .doc-code-block {
+  background: #f6f8fa;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .doc-code-block code {
+  color: #24292f;
+}
+
+[data-theme="light"] .doc-inline-code {
+  background: rgba(255, 65, 84, 0.06);
+}
+
+[data-theme="light"] .skeleton-card {
+  background: hsl(var(--bg-tertiary));
+}
+
+[data-theme="light"] .skeleton-line {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .skeleton-card::after {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255,255,255, 0) 0%,
+    rgba(255,255,255, 0.4) 20%,
+    rgba(255,255,255, 0.6) 60%,
+    rgba(255,255,255, 0) 100%
+  );
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

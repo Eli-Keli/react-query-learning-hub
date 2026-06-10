@@ -1,12 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TaskList } from './TaskList';
 import { NetworkSettings } from './NetworkSettings';
 import { QueryMonitor } from './QueryMonitor';
 import { DocViewer } from './DocViewer';
-import { GraduationCap, Database, BookOpen } from 'lucide-react';
+import { GraduationCap, Database, BookOpen, Sun, Moon } from 'lucide-react';
 
 export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<'monitor' | 'guide'>('monitor');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const stored = localStorage.getItem('theme');
+    return (stored as 'dark' | 'light') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+  };
 
   return (
     <div className="dashboard-container">
@@ -23,6 +36,14 @@ export const Dashboard = () => {
             </p>
           </div>
         </div>
+        <button 
+          onClick={toggleTheme} 
+          className="btn btn-secondary btn-theme-toggle"
+          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+        </button>
       </header>
 
       {/* DUAL-COLUMN GRID LAYOUT */}
